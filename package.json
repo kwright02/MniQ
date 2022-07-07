@@ -1,0 +1,23 @@
+{
+  "name": "miniq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwright02/MniQ.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kwright02/MniQ/issues"
+  },
+  "homepage": "https://github.com/kwright02/MniQ#readme",
+  "dependencies": {
+    "@types/node": "^18.0.3",
+    "typescript": "^4.7.4"
+  }
+}
