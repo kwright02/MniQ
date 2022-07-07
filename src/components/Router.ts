@@ -1,4 +1,4 @@
-import Component from "../framework/Component.ts";
+import { Component } from "../framework/Component.ts";
 
 export declare type RouterPath = {
     path: string,
