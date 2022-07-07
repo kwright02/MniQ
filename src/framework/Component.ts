@@ -7,16 +7,6 @@ export interface Component {
 
 }
 
-export default class AbstractComponent implements Component {
-
-    constructor() {}
-
-    onInit(): void {
-        
-    }
-
-}
-
 export const template = (component_mapping: ComponentMap) => {
     
     MiniQ.mapper.addComponentMapping(component_mapping);
