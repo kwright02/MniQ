@@ -22,7 +22,9 @@ export default class HttpHandler {
 
     static handle(req: Request){
 
-        const path = ((req.url.match('/\//g') || []).length === 3 ? "/" : req.url.split("/")[2]);
+        console.log((req.url.match('/\//g') || []).length);
+
+        const path = ((req.url.match('/\//g') || []).length === 3 ? "/" : req.url.split("/")[3]);
 
         console.log(path);
 
