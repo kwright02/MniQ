@@ -22,6 +22,8 @@ export default class HttpHandler {
 
     static handle(req: Request){
 
+        console.log(req.url);
+
         console.log("Count", (req.url.match('/\//g') || []).length);
 
         const path = ((req.url.match('/\//g') || []).length === 3 ? "/" : req.url.split("/")[3]);
