@@ -5,25 +5,24 @@ import HttpHandler from "./src/framework/network/HttpHandler.ts";
 
 export default class MiniQ {
 
-    static readonly DEFAULT_PORT = 3000;
+    readonly DEFAULT_PORT = 3000;
 
-    static mapper: ComponentMapper = new ComponentMapper();
-    static router: Router = new Router();
-    static server: Server = new Server({ port: this.DEFAULT_PORT, handler: MiniQ.defaultRequestHandler });
+    mapper: ComponentMapper = new ComponentMapper();
+    router: Router = new Router();
+    handler: HttpHandler = new HttpHandler();
+    server: Server = new Server({ port: this.DEFAULT_PORT, handler: this.handler.handle });
 
-    private static defaultRequestHandler(req: Request) {
-        
-        return HttpHandler.handle(req);
+    async start(port?: number, callback?: Function){
 
-    }
-
-    static async start(port?: number, callback?: Function){
-        if(port) MiniQ.server = new Server({ port: port, handler: MiniQ.defaultRequestHandler });
+        if(port) this.server = new Server({ port: port, handler: this.handler.handle });
         if(callback) callback(port);
+
+        console.log(this.handler);
+
         await this.server.listenAndServe();
     }
 
-    static stop(){
+    stop(){
         this.server.close();
     }
 
