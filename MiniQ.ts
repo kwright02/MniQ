@@ -1,7 +1,7 @@
 import Router from "./src/components/Router.ts";
 import ComponentMapper from "./src/framework/ComponentMapper.ts";
 import { Server } from "https://deno.land/std@0.147.0/http/server.ts";
-import HttpHandler from "./src/framework/network/HttpHandler.ts";
+import HttpHandler, { AbstractHandler } from "./src/framework/network/HttpHandler.ts";
 
 export default class MiniQ {
 
@@ -11,6 +11,14 @@ export default class MiniQ {
     router: Router = new Router();
     handler: HttpHandler = new HttpHandler();
     server: Server = new Server({ port: this.DEFAULT_PORT, handler: this.handler.handle });
+
+    get(path: string, middleware: AbstractHandler){
+        this.handler.get(path, middleware);
+    }
+
+    post(path: string, middleware: AbstractHandler){
+        this.handler.post(path, middleware);
+    }
 
     async start(port?: number, callback?: Function){
 
