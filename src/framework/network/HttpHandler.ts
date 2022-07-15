@@ -1,3 +1,5 @@
+import chalk from "https://deno.land/x/chalk_deno@v4.1.1-deno/source/index.js";
+
 export declare type RequestHandler = {
     path: string,
     middleware: AbstractHandler
@@ -15,7 +17,8 @@ export declare type req = {
     method: string,
     redirect: string,
     url: string,
-    params: any
+    params: any,
+    query: any
 }
 
 export class DefaultErrorHandler implements AbstractHandler {
@@ -74,7 +77,8 @@ export default class HttpHandler {
             method: req.method,
             redirect: req.redirect,
             url: req.url,
-            params: {}
+            params: {},
+            query: {}
         }
 
         switch(req.method) {
@@ -97,14 +101,30 @@ export default class HttpHandler {
                             
                             const raw = raw_params[i].replace("/:", "");
     
-                            params[raw] = path_params_raw[i];
+                            params[raw] = path_params_raw[i].replace(/\?.*/, "");
     
                         }
     
-                        console.log("Params", params);
+                        console.log(`${chalk.red("[Debug]")} ${chalk.yellow("Params")}`, params);
 
                         cosntructed_request.params = params;
                         
+                        const query_raw = path.split("?")[1];
+
+                        if(Object.entries(params).length > 0){
+
+                            const query_raw_params = query_raw.split("&");
+
+                            const query: any = {};
+
+                            query_raw_params.forEach(qp => {
+                                query[qp.split("=")[0]] = qp.split("=")[1];
+                            });
+
+                            console.log("Query", query);
+
+                        }
+
                         const opres = handler.middleware.handle(cosntructed_request, response);
                         if(opres) response = opres;
                         this.foundHandler = true;
@@ -133,7 +153,7 @@ export default class HttpHandler {
             }
         }
 
-        console.log(req.method, path, response.status);
+        console.log(chalk.bold.inverse(req.method), chalk.cyan(path), chalk.green(response.status));
 
         return response;
 
